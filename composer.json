@@ -1,5 +1,5 @@
 {
-    "name": "tichnut/model_form_generator",
+    "name": "tichnut/formalize",
     "description": "A simple way to generate html forms based on Laravel Eloquent model's",
     "type": "library",
     "authors": [
@@ -10,11 +10,14 @@
     ],
     "minimum-stability": "dev",
     "require": {},
+    "autoload": {
+        "classmap": [ "src/" ]
+    },
     "extra": {
         "laravel": {
             "providers": [
-                "Tichnut\\ModelFormGenerator\\ModelFormGeneratorServiceProvider"
+                "Tichnut\\Formalize\\"
             ]
         }
-    },
+    }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Tichnut\ModelFormGenerator;
+namespace Tichnut\Formalize;
 
 use Illuminate\Support\ServiceProvider;
 
-class ModelFormGeneratorServiceProvider extends ServiceProvider
+class FormalizeServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -13,7 +13,7 @@ class ModelFormGeneratorServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'formalize');
     }
 
     /**
