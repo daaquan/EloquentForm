@@ -1,0 +1,20 @@
+{
+    "name": "tichnut/model_form_generator",
+    "description": "A simple way to generate html forms based on Laravel Eloquent model's",
+    "type": "library",
+    "authors": [
+        {
+            "name": "BG Neff",
+            "email": "pbgneff@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tichnut\\ModelFormGenerator\\ModelFormGeneratorServiceProvider"
+            ]
+        }
+    },
+}
