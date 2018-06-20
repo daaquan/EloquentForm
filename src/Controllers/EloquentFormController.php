@@ -1,9 +1,9 @@
 <?php
-namespace Tichnut\Formalize;
+namespace Tichnut\EloquentForm;
  
 use App\Http\Controllers\Controller;
  
-class FormalizeController extends Controller
+class EloquentFormController extends Controller
 {
 	/**
 	 * @param [mixed] $model The Eloquent Model being used to generate the form
@@ -15,7 +15,7 @@ class FormalizeController extends Controller
 
     public function generate()
     {	
-        return view('formalize::form', ['model' => $this->model])->render();
+        return view('eloquent_form::form', ['model' => $this->model])->render();
     }
  
 }

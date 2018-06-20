@@ -8,6 +8,8 @@
 	@endforeach
 	<div class="form-group">
 		<button id="model-form-submit" class="btn btn-success">Save</button>
+		<button id="model-form-submit" class="btn btn-success">Delete</button>
+		<button id="model-form-submit" class="btn btn-success">Cancel</button>
 	</div>
 </form>
 

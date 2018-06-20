@@ -1,5 +1,5 @@
 {
-    "name": "tichnut/formalize",
+    "name": "tichnut/eloquent_form",
     "description": "A simple way to generate html forms based on Laravel Eloquent model's",
     "type": "library",
     "authors": [
@@ -16,7 +16,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Tichnut\\Formalize\\"
+                "Tichnut\\EloquentForm\\"
             ]
         }
     }

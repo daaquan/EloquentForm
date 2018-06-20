@@ -1,10 +1,10 @@
 <?php
 
-namespace Tichnut\Formalize;
+namespace Tichnut\EloquentForm;
 
 use Illuminate\Support\ServiceProvider;
 
-class FormalizeServiceProvider extends ServiceProvider
+class EloquentFormServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -13,7 +13,7 @@ class FormalizeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/resources/views', 'formalize');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'eloquent_form');
     }
 
     /**
