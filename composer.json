@@ -9,7 +9,7 @@
             "email": "pbgneff@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "dev-master",
     "require": {},
     "autoload": {
         "classmap": [ "src/" ]
