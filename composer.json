@@ -17,7 +17,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Tichnut\\EloquentForm\\"
+                "Tichnut\\EloquentForm\\EloquentFormServiceProvider"
             ]
         }
     }
