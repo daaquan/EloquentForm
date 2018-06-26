@@ -14,8 +14,23 @@ class EloquentFormController extends Controller
 	}
 
     public function generate()
-    {	
-        return view('eloquent_form::form', ['model' => $this->model])->render();
+    {
+
+    	 foreach($this->model->getAttributes() as $key => $value):
+    		if(in_array($key, $this->model->getHidden())) continue;
+    		if(in_array($key, $this->model->ef_hide ?? [])) continue;
+    		if($key == 'id') continue;
+
+		    $form_data['fields'][] = [
+		    	'id' => $key,
+		    	'label' => ucwords(str_replace('_', ' ', $key)),
+		    	'value' => $value,
+		    	'disabled' => in_array($key, $this->model->ef_disabled ?? []),
+		    ];
+		endforeach;
+
+
+        return view('eloquent_form::form', compact('form_data'))->render();
     }
  
 }

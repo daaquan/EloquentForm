@@ -1,15 +1,10 @@
 <form id="model-form">
-	@foreach ($model->getAttributes() as $key => $value)
-		@continue(in_array($key, $model->getHidden()))
-		<div class="form-group">
-			<label class="col-form-label">{{ ucwords(str_replace('_', ' ', $key)) }}</label>
-			<input class="form-control" name="{{ $key }}" id="{{ $key }}" value="{{ $value }}"{{ $key == 'id' ? ' disabled' : '' }} />
-		</div>
+	@foreach ($form_data['fields'] as $field)
+		@include('eloquent_form::form_group')
 	@endforeach
 	<div class="form-group">
 		<button id="model-form-submit" class="btn btn-success">Save</button>
-		<button id="model-form-submit" class="btn btn-success">Delete</button>
-		<button id="model-form-submit" class="btn btn-success">Cancel</button>
+		<button id="model-form-delete" class="btn btn-danger">Delete</button>
 	</div>
 </form>
 
@@ -17,17 +12,16 @@
 let model_form = {
 	form: document.getElementById('model-form'),
 	submit_btn: document.getElementById('model-form-submit'),
+	delete_btn: document.getElementById('model-form-delete'),
 	save_url: @json($model->save_url ?? null),
+	path_parts: location.pathname.split('/'),
 	render_save_url() {
 		if(!this.save_url) {
-			let path_parts = location.pathname.split('/')
-			this.save_url = path_parts[4];
+			this.save_url = this.path_parts[4];
 		}
 	},
 	save() {
-
 		let form_data = {};
-
 		for(var i in this.form.elements) {
 			let element = this.form.elements[i];
 			form_data[element.name] = element.value;
@@ -39,6 +33,19 @@ let model_form = {
 			data: form_data
 		})
 	},
+	delete() {
+		let self = this;
+		if(confirm('Are you sure you want tot delete this item?')){
+			$.ajax({
+				url: this.save_url,
+				method: 'delete',
+				success() {
+					//go back to the root models page
+					location.href = self.path_parts.slice(0, -1).join('/')
+				}
+			})
+		}
+	},
 	init() {
 		let self = this;
 		//stop form default submit
@@ -48,6 +55,10 @@ let model_form = {
 
 		this.submit_btn.onclick = (e) => {
 			self.save();
+		}
+
+		this.delete_btn.onclick = (e) => {
+			self.delete();
 		}
 
 		//render save url
