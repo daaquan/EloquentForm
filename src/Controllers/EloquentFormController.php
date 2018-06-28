@@ -16,17 +16,10 @@ class EloquentFormController extends Controller
     public function generate()
     {	
     	$attributes = $this->get_table_columns($this->model);
-    	foreach($this->model->getAttributes() as $key => $value):
-    		if(in_array($key, $this->model->getHidden())) continue;
-    		if(in_array($key, $this->model->ef_hide ?? [])) continue;
-    		if($key == 'id') continue;
 
-		    $form_data['fields'][] = [
-		    	'id' => $key,
-		    	'label' => ucwords(str_replace('_', ' ', $key)),
-		    	'value' => $value,
-		    	'disabled' => in_array($key, $this->model->ef_disabled ?? []),
-		    ];
+    	foreach($attributes as $key => $value):
+    		if($this->skip_fields($key)) continue;
+		    $form_data['fields'][] = $this->build_field($key, $value);
 		endforeach;
 
         return view('eloquent_form::form', compact('form_data'))->render();
@@ -35,22 +28,32 @@ class EloquentFormController extends Controller
     private function get_table_columns($model) 
     {
         $columns = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
-        // remove fields that should never be passed along
-        $removed_fields[] = 'id';
-        $removal_diff = array_merge($model->getHidden(), $removed_fields);
+        return $columns;
+    }
 
-        $cleaned_columns = array_diff($columns, $removal_diff);
-        return array_values($cleaned_columns);
+    /**
+     * Fields that should be skipped when
+     * the fileds are built
+     * @param  string $attribute model attribute
+     * @return boolean      [description]
+     */
+    private function skip_fields($attribute)
+    {
+		if(in_array($attribute, $this->model->getHidden())) return true;
+		if(in_array($attribute, $this->model->ef_hide ?? [])) return true;
+		if($attribute == 'id') return true;
+
+		return false;
     }
 
     private function build_field($attribute, $value = '')
     {
     	return [
-	    	'id' => $key,
-	    	'label' => ucwords(str_replace('_', ' ', $key)),
+	    	'id' => $attribute,
+	    	'label' => ucwords(str_replace('_', ' ', $attribute)),
 	    	'value' => $value,
-	    	'disabled' => in_array($key, $this->model->ef_disabled ?? [])
-    	]
+	    	'disabled' => in_array($attribute, $this->model->ef_disabled ?? [])
+    	];
     }
  
 }
